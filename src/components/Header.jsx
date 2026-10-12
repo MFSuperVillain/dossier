@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { Sun, Moon, Plus, Download, Upload, FileSpreadsheet, Search, Cloud, CloudOff, HardDrive } from 'lucide-react'
+import { Sun, Moon, Plus, Download, Upload, FileSpreadsheet, Search, Coffee, Cloud, CloudOff, HardDrive } from 'lucide-react'
 
 function Stat({ label, value, color }) {
   return (
@@ -47,6 +47,7 @@ export default function Header({
   onToggleTheme,
   onAddJob,
   onSearchJobs,
+  onHiringCafe,
   onExportJSON,
   onImportJSON,
   onExportXLSX,
@@ -55,7 +56,7 @@ export default function Header({
 
   return (
     <header className="border-b" style={{ borderColor: 'var(--border)' }}>
-      <div className="px-6 pt-5 pb-4 flex flex-wrap items-center gap-4">
+      <div className="px-4 sm:px-6 pt-5 pb-4 flex flex-wrap items-center gap-4">
         <div className="mr-auto">
           <h1 className="font-display text-xl font-semibold tracking-tight">Dossier</h1>
           <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
@@ -63,14 +64,14 @@ export default function Header({
           </p>
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <Stat label="Active" value={stats.active} color="#5B8DEF" />
           <Stat label="Interviewing" value={stats.interviewing} color="#E8A33D" />
           <Stat label="Offers" value={stats.offers} color="#4FD1C5" />
           <Stat label="Response Rate" value={`${stats.responseRate}%`} color="#9B8CFF" />
         </div>
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex flex-wrap items-center gap-1.5">
           <SyncIndicator status={syncStatus} />
 
           <button
@@ -117,6 +118,15 @@ export default function Header({
             style={{ borderColor: 'var(--border)' }}
           >
             <Upload size={16} />
+          </button>
+
+          <button
+            onClick={onHiringCafe}
+            className="flex items-center gap-1.5 px-3 py-2 rounded-lg border font-medium text-sm hover:bg-[var(--surface-2)] transition-colors"
+            style={{ borderColor: 'var(--border)', color: 'var(--text)' }}
+          >
+            <Coffee size={16} className="text-signal-amber" />
+            HiringCafe
           </button>
 
           <button

@@ -18,7 +18,7 @@ export default function ConfirmDialog({ open, title, description, confirmLabel =
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 10 }}
             transition={{ duration: 0.15 }}
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-sm z-[70] rounded-xl border p-5 shadow-panel"
+            className="fixed inset-0 m-auto h-fit w-[calc(100%-2rem)] max-w-sm z-[70] rounded-xl border p-5 shadow-panel"
             style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}
           >
             <h3 className="font-display font-semibold mb-1.5">{title}</h3>

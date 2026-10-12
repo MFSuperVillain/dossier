@@ -5,6 +5,8 @@ import DetailPanel from './components/DetailPanel.jsx'
 import AddJobModal from './components/AddJobModal.jsx'
 import JobSearchModal from './components/JobSearchModal.jsx'
 import ConfirmDialog from './components/ConfirmDialog.jsx'
+import HiringCafeModal from './components/HiringCafeModal.jsx'
+import { readIncomingShare, clearIncomingShare } from './lib/hiringCafe.js'
 import { defaultChecklist, calculateProgress } from './lib/checklist.js'
 import {
   loadApplications,
@@ -59,7 +61,22 @@ export default function App() {
   })
 
   const [selectedJobId, setSelectedJobId] = useState(null)
-  const [addModalOpen, setAddModalOpen] = useState(false)
+  // A listing shared in from HiringCafe (Share sheet or ?url=… link) opens
+  // the add form pre-filled.
+  const [incoming] = useState(() => readIncomingShare())
+  const [addInitial, setAddInitial] = useState(incoming)
+  const [addModalOpen, setAddModalOpen] = useState(!!incoming)
+  const [hcModalOpen, setHcModalOpen] = useState(false)
+
+  useEffect(() => {
+    if (incoming) clearIncomingShare()
+  }, [incoming])
+
+  const openQuickAdd = (fields) => {
+    setHcModalOpen(false)
+    setAddInitial(fields)
+    setAddModalOpen(true)
+  }
   const [searchModalOpen, setSearchModalOpen] = useState(false)
   const [confirm, setConfirm] = useState(null) // { title, description, onConfirm, danger, confirmLabel }
 
@@ -166,12 +183,13 @@ export default function App() {
         onToggleTheme={() => setDarkMode((d) => !d)}
         onAddJob={() => setAddModalOpen(true)}
         onSearchJobs={() => setSearchModalOpen(true)}
+        onHiringCafe={() => setHcModalOpen(true)}
         onExportJSON={() => exportToJSON(applications)}
         onImportJSON={handleImportJSON}
         onExportXLSX={() => exportToSpreadsheet(enriched)}
       />
 
-      <main className="flex-1 px-6 py-5">
+      <main className="flex-1 px-4 sm:px-6 py-5">
         <Board
           applications={enriched}
           setApplications={(updater) =>
@@ -190,7 +208,17 @@ export default function App() {
         onReset={requestReset}
       />
 
-      <AddJobModal open={addModalOpen} onClose={() => setAddModalOpen(false)} onSubmit={addJob} />
+      <AddJobModal
+        open={addModalOpen}
+        initial={addInitial}
+        onClose={() => {
+          setAddModalOpen(false)
+          setAddInitial(null)
+        }}
+        onSubmit={addJob}
+      />
+
+      <HiringCafeModal open={hcModalOpen} onClose={() => setHcModalOpen(false)} onQuickAdd={openQuickAdd} />
 
       <JobSearchModal
         open={searchModalOpen}

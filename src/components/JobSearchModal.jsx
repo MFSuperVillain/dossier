@@ -58,7 +58,7 @@ export default function JobSearchModal({ open, onClose, onAdd }) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.97, y: 10 }}
             transition={{ duration: 0.15 }}
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl max-h-[85vh] z-50 rounded-xl border shadow-panel flex flex-col"
+            className="fixed inset-0 m-auto h-fit w-[calc(100%-2rem)] max-w-2xl max-h-[85vh] z-50 rounded-xl border shadow-panel flex flex-col"
             style={{ background: 'var(--surface)', borderColor: 'var(--border)' }}
           >
             <div className="px-5 pt-5 pb-4 border-b shrink-0" style={{ borderColor: 'var(--border)' }}>
