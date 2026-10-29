@@ -35,6 +35,13 @@ body {
   transition: background 0.2s ease, color 0.2s ease;
 }
 
+/* Native dropdown lists ignore the page theme on Windows, so give
+   <option> rows explicit theme colors to keep them readable. */
+select option {
+  background: var(--surface);
+  color: var(--text);
+}
+
 /* ───────── Custom scrollbar ───────── */
 ::-webkit-scrollbar {
   width: 8px;
